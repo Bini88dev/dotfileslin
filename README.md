@@ -1,2 +1,2 @@
-# dotfileslin
-Config files for my Linux!
+# Linux config
+Files for easy restore...
