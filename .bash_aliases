@@ -6,7 +6,7 @@ alias saferestart='sudo shutdown -r now'
 alias forcerestart='sudo shutdown -r -n now'
 alias disks='sudo lsblk'
 alias disksstat='df -h -x squashfs -x tmpfs -x devtmpfs'
-# alias repos='grep -r --include '*.list' '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/'
+#alias repos='grep -r --include '*.list' '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/'
 
 ## Get top process eating memory
 alias mem5='ps auxf | sort -nr -k 4 | head -5'
@@ -52,7 +52,7 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 ## SSH
 alias ssha='eval $(ssh-agent) && ssh-add'
 
-## Install, installed, update, upgrade, remove...
+## Debian-based installed, install, update, upgrade, remove, purge...
 alias installed='sudo apt list --installed'
 alias allinone='sudo apt update && sudo apt upgrade -y && sudo apt autoclean -y && sudo apt autoremove -y && sudo apt autopurge -y'
 alias inst='sudo apt install'
@@ -62,6 +62,36 @@ alias upg='sudo apt upgrade'
 alias ac='sudo apt autoclean'
 alias ar='sudo apt autoremove'
 alias ap='sudo apt autopurge'
+
+## Arch-based installed, install, update, upgrade, remove, purge..
+alias installedar='pacman -Q' 
+alias allinonear='sudo pacman -Syu --noconfirm && sudo pacman -Sc --noconfirm && sudo pacman -Rns $(pacman -Qdtq) --noconfirm' 
+alias instar='sudo pacman -S'
+alias purar='sudo pacman -Rns'
+alias updar='sudo pacman -Sy'
+alias upgar='sudo pacman -Syu'
+alias acar='sudo pacman -Sc'
+alias apar='sudo pacman -Rns $(pacman -Qdtq)'
+
+## Alpine-based installed, install, update, upgrade, remove, purge...
+alias installedal='apk list --installed' 
+alias allinoneal='sudo apk update && sudo apk upgrade && sudo apk cache clean' 
+alias instal='sudo apk add'
+alias pural='sudo apk del'
+alias updal='sudo apk update'
+alias upgal='sudo apk upgrade'
+alias acal='sudo apk cache clean'
+alias apal='sudo apk del $(apk info -d | awk "{print \$1}")'
+
+## Rocky-based installed, install, update, upgrade, remove, purge...
+alias installedro='sudo dnf list installed' 
+alias allinonero='sudo dnf check-update && sudo dnf upgrade -y && sudo dnf autoremove -y && sudo dnf clean all' 
+alias instro='sudo dnf install -y'
+alias puro='sudo dnf remove -y'
+alias updro='sudo dnf check-update'
+alias upgro='sudo dnf upgrade -y'
+alias acro='sudo dnf clean all'
+alias apro='sudo dnf autoremove -y'
 
 ## Lists, grep, rm, cp, mv
 alias l='ls -CF'
@@ -103,7 +133,7 @@ alias mv='mv -i'
 alias na='nano'
 alias vi='vim'
 
-##xsel
+## xsel
 alias pbcopy='xsel --input --clipboard'
 alias pbpaste='xsel --output --clipboard'
 
@@ -134,7 +164,7 @@ alias dockstats='docker stats $(docker ps -q)'                                  
 alias dockimg='docker images'                                                   # list images installed
 alias dockprune='docker system prune -a'                                        # prune everything
 alias dockup='docker compose up -d'                                             # run compose script
-# alias dockceu='docker compose run --rm -u $(id -u):$(id -g)'                    # run as the host user
+#alias dockceu='docker compose run --rm -u $(id -u):$(id -g)'                   # run as the host user
 alias docker-clean=' \
   docker container prune -f ; \
   docker image prune -f ; \
