@@ -1,7 +1,7 @@
-# Dotfiles for cross-linux distros...
+# Dotfiles for linux distros...
 My easy backup & restore of main config files...
 
-## Install yadm, BEFORE any furhter TODOs
+## Install yadm, before any furhter TODOs
 ```
 sudo apt install yadm
 ```
@@ -11,12 +11,13 @@ Use the proprietary package manager for your distro.
 ```
 yadm clone https://github.com/Bini88dev/dotfileslin.git
 ```
-Confirm changes...
+
+### Confirm changes...
 ```
 yadm checkout "home/$USER"
 ```
 
-### Clear & regenerate font cache AFTER clone
+### Clear & regenerate font cache after clone
 ```
 fc-cache -f -v
 ```
