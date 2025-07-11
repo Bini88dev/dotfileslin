@@ -93,6 +93,8 @@ alias upgro='sudo dnf upgrade -y'
 alias acro='sudo dnf clean all'
 alias apro='sudo dnf autoremove -y'
 
+## NixOS-based commands
+
 ## Lists, grep, rm, cp, mv
 alias l='ls -CF'
 alias hm='cd ~/'
@@ -113,6 +115,15 @@ alias ldir="ls -l | egrep '^d'"   # directories only
 alias lla='ls -Al'                # List and Hidden Files
 alias las='ls -A'                 # Hidden Files
 alias lls='ls -l'                 # List
+
+## Eza, better ls
+alias le='eza -lag --icons=always'
+alias lt='eza -lTg --icons=always'
+alias lt2='eza -lTg --level=2 --icons=always'
+alias lt3='eza -lTg --level=3 --icons=always'
+alias lta='eza -lTag --icons=always'
+alias lta2='eza -lTag --level=2 --icons=always'
+alias lta3='eza -lTag --level=3 --icons=always'
 
 alias h='history'
 alias hgrep="fc -El 0 | grep"
@@ -147,7 +158,7 @@ alias tmuxl='tmux list-sessions'
 alias yadmremo='yadm remote -v'
 alias yadmrepo='yadm remote add origin'
 alias yadma='yadm add'
-alias yadmcom='yadm commit -s -m'
+alias yadmcom='yadm commit -s -am'
 alias yadmdi='yadm diff'
 alias yadmcl='yadm clone'
 alias yadms='yadm status'
@@ -289,7 +300,7 @@ cd ()
 ## Git
 gitpush() {
     git add .
-    git commit -s -m "$*"
+    git commit -s -am "$*"
     git push
 }
 gitupdate() {
