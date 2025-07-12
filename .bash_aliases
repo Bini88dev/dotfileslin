@@ -95,7 +95,7 @@ alias apro='sudo dnf autoremove -y'
 
 ## NixOS-based commands
 
-## Lists, grep, rm, cp, mv
+## Lists, grep, rm, cp, mv, cd
 alias l='ls -CF'
 alias hm='cd ~/'
 alias la='ls -Alh'                # show hidden files
@@ -158,15 +158,15 @@ alias tmuxl='tmux list-sessions'
 alias yadmremo='yadm remote -v'
 alias yadmrepo='yadm remote add origin'
 alias yadma='yadm add'
-alias yadmcom='yadm commit -s -am'
-alias yadmdi='yadm diff'
+alias yadmc='yadm commit -s -am'
+alias yadmp='yadm push' # can also go in combi with '-u origin'
+alias yadmd='yadm diff'
 alias yadmcl='yadm clone'
 alias yadms='yadm status'
 alias yadmls='yadm list -a'
 alias yadmrm='yadm rm'
 alias yadme='yadm encrypt'
 alias yadmd='yadm decrypt'
-alias yadmpush="yadm push -u origin"
 
 ## Docker
 alias dockls="docker container ls | awk 'NR > 1 {print \$NF}'"                  # display names of running containers
@@ -325,7 +325,7 @@ alias gp='git push'
 # alias grb='git branch -r'                                                                           # display remote branch
 # alias gplo='git pull origin'
 # alias gb='git branch '
-alias gc='git commit -s -m'
+alias gc='git commit -s -am'
 alias gd='git diff'
 # alias gco='git checkout '
 # alias gl='git log --pretty=oneline'
@@ -333,18 +333,22 @@ alias gd='git diff'
 # alias grs='git remote show'
 # alias glol='git log --graph --abbrev-commit --oneline --decorate'
 # alias gclean="git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d" # Delete local branch merged with master
-# alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:red)%(refname:short)%(color:reset) - %(color:yellow)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:blue)%(committerdate:relative)%(color:reset))'"                                                             # git log for each branches
-# alias gsub="git submodule update --remote"                                                        # pull submodules
-# alias gj="git-jump"                                                                               # Open in vim quickfix list files of interest (git diff, merged...)
-# alias gdif="git diff --no-index"                                                                   # Diff two files even if not in git repo! Can add -w (don't diff whitespaces)
+alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:red)%(refname:short)%(color:reset) - %(color:yellow)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:blue)%(committerdate:relative)%(color:reset))'" # git log for each branches
+# alias gsub="git submodule update --remote" # Pull submodules
+# alias gj="git-jump"                        # Open in vim quickfix list files of interest (git diff, merged...)
+# alias gdif="git diff --no-index"           # Diff two files even if not in git repo! Can add -w (don't diff whitespaces)
 
-## Nvim commands
+## Vim/Neovim commands
 alias nvimcomm='echo "\
-Neovim Profile Commands
-===========================
+Vim/Neovim Profile Configuration Commands
+=========================================
 Esc - Normal mode, save, exit, navigate, etc.
 v - visual mode, to select, copy, paste
-i - insert mode, to edit and insert txt
+SHIFT/CTRL + v - visual block
+i - insert mode, before coursor
+I - insert at the beginning of the line
+a - insert mode, append after the cursor
+A - inset mode, append at the end of the line
 SHIFT + . - to activate ":" command line
 :q - quit vim, this fails when changes have been made
 :q!- quit without writing
@@ -362,6 +366,8 @@ k - move up
 l - move right
 - - move line upwards, on the first non-blank character
 + - move line downwards, on the first non-blank character
+o - open (append) blank line below current line
+O - open blank line above current line
 enter - move line downwards, on the first non-blank character
 Up, Down, Left, Right - resize windows
 CTRL + d - vertical down scroll
@@ -370,9 +376,12 @@ H - move the cursor to the top of the screen
 M - move the cursor to the middle of the screen
 L - move the cursor to the bottom of the screen
 w - jump by start of words (punctuation considered words)
+5w - jump 5 word… work for others to
 W - jump by words (spaces separate words)
 e - jump to end of words (punctuation considered words)
 E - jump to end of words (no punctuation)
+ge - jump backward to end of a word
+gE - jump backwards to the end of a word (words can contain punctuation)
 b - jump backward by words (punctuation considered words)
 B - jump backward by words (no punctuation)
 gg - jump to first line of the file
@@ -381,18 +390,76 @@ G - jump to last line of the file
 $ - jum to end of line
 10j - jump next 10 rows, can be any number
 10k - jump back 10 rows, can be any number
-d - delete line
-x - delete first caracter
 Leader + lw - line wraping
 ALT + j - move text up
 ALT + k - move text down
+r - replace a single character (does not use insert mode)
+R - enter Insert mode, replacing characters rather than inserting
+J - join line below to the current one with one space in between
+gJ - join line below to the current one without space in between
+cc - change (replace) an entire line
+cw - change (replace) to the end of word (same as ce)
+ciw - change (replace) word under the cursor
+caw - change (replace) word under the cursor and the space after or before it
+ci" - change (replace) word inside ""
+cis - change (replace) sentence under the cursor
+cas - change (replace) sentence under the cursor and the space after or before it
+cib - change (replace) inside a block with ()
+cab - change (replace) a block with ()
+ciB - change (replace) inside a block with {}
+caB - change (replace) a block with {}
+u - undo
+CTRL+ r - redo
+. - repeat last command
+>> - indent line one column to right
+>i{ - indent everything in the {}
+<< - indent line one column to left
+== - auto-indent current line
+x - delete current character
+X - delete previous character
+dw - delete (cut) to the end of word (same as de)
+diw - delete (cut) word under the cursor
+daw - delete (cut) word under the cursor and the space after or before it
+dap - delete (cut) a paragraph
+dd - delete (cut) a line
 y - in visual mode, yank(copy) selected
 yw - in visual mode, yank word
 yy - in visual mode, yank (copy) a line
 2yy - in visual mode, yank 2 lines
 p - in visual mode, paste selected
+P - put (paste) before cursor/current line
 > - in visual mode, to move forward selected
 > - in visual mode to move backwards selected
+qa - start recording macro 'a'
+q - end recording macro
+@a - replay macro 'a'
+V - start linewise visual mode
+CTRL/for Win ALT + v - start visual block mode
+ALT + v + I - insert in multiple lines text
+aw - in visual mode, mark a word
+ab - in visual mode, a () block (with braces)
+aB - in visual mode, a {} block (with brackets)
+at - in visual mode, a block with <> tags
+ib - in visual mode, inner () block
+iB - in visual mode, inner {} block
+it - in visual mode, inner <> block
+% - in visual mode, select block or jump to next brace, (), [],{}, <>
+:%s/bu/ba/g - don't select anything, replace bu with ba in text
+:'<,'>s/bu/ba/g - select over v block, replace in selected block bu with ba
+f - find pattern (for exmp. s)
+F - find backwords
+4tf - find 4'th t in line
+; - repeat last find command
+, - repeat find backwords
+/pattern - search for pattern
+?pattern - search backward for pattern
+n - next find pattern
+N - previous find pattern
+:e filename - edit a file in a new buffer
+:tabe filename - edit a file in a new tab
+:ls - list all buffers
+:!shell - run shell
+:!dir run commands from command line
 Leader + v - split vertical
 Leader + h - split horizontal
 Leader + xs - close split
@@ -403,4 +470,4 @@ Leader + tx - close tab
 Leader + tn - next tab
 Leader + tp - previus tab
 Leader + x - close tab
-==========================="'
+========================================="'
