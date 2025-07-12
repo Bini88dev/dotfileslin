@@ -430,9 +430,9 @@ p - in visual mode, paste selected
 P - put (paste) before cursor/current line
 > - in visual mode, to move forward selected
 > - in visual mode to move backwards selected
-qa - start recording macro 'a'
+qa - start recording macro "a"
 q - end recording macro
-@a - replay macro 'a'
+@a - replay macro "a"
 V - start linewise visual mode
 CTRL/for Win ALT + v - start visual block mode
 ALT + v + I - insert in multiple lines text
@@ -444,11 +444,11 @@ ib - in visual mode, inner () block
 iB - in visual mode, inner {} block
 it - in visual mode, inner <> block
 % - in visual mode, select block or jump to next brace, (), [],{}, <>
-:%s/bu/ba/g - don't select anything, replace bu with ba in text
-:'<,'>s/bu/ba/g - select over v block, replace in selected block bu with ba
+:%s/bu/ba/g - dont select anything, replace bu with ba in text
+:'"<"',>s/bu/ba/g - select over v block, replace in selected block bu with ba, apostrofi "" ne trebaju
 f - find pattern (for exmp. s)
 F - find backwords
-4tf - find 4'th t in line
+4tf - find 4th t in line
 ; - repeat last find command
 , - repeat find backwords
 /pattern - search for pattern
