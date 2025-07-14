@@ -24,9 +24,9 @@ set scrolloff=8 " Keep 8 lines above/below cursor
 set sidescrolloff=8 " Keep 8 columns to the left/right of cursor
 set relativenumber " Use relative line numbers
 set numberwidth=4 " Number column width
-set shiftwidth=4 " Spaces per indentation
-set tabstop=4 " Spaces per tab
-set softtabstop=4 " Spaces per tab during editing ops
+set shiftwidth=2 " Spaces per indentation
+set tabstop=2 " Spaces per tab
+set softtabstop=2 " Spaces per tab during editing ops
 set expandtab " Convert tabs to spaces
 set nocursorline " Don't highlight the current line
 set splitbelow " Horizontal splits below current window
@@ -66,19 +66,19 @@ vnoremap <Space> <Nop>
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 
-" clear highlights
+" Clear highlights
 nnoremap <Esc> :noh<CR>
 
-" save file
+" Save file
 nnoremap <C-s> :w<CR>
 
-" save file without auto-formatting
+" Save file without auto-formatting
 nnoremap <leader>sn :noautocmd w<CR>
 
-" quit file
+" Quit file
 nnoremap <C-q> :q<CR>
 
-" delete single character without copying into register
+" Delete single character without copying into register
 nnoremap x "_x
 
 " Vertical scroll and center
@@ -100,11 +100,11 @@ nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 nnoremap <leader>sb :buffers<CR>:buffer<Space>
 
-" increment/decrement numbers
+" Increment/decrement numbers
 nnoremap <leader>+ <C-a>
 nnoremap <leader>- <C-x>
 
-" window management
+" Window management, splits
 nnoremap <leader>v <C-w>v
 nnoremap <leader>h <C-w>s
 nnoremap <leader>se <C-w>=
@@ -116,7 +116,7 @@ nnoremap <C-j> :wincmd j<CR>
 nnoremap <C-h> :wincmd h<CR>
 nnoremap <C-l> :wincmd l<CR>
 
-" tabs
+" Tabs
 nnoremap <leader>to :tabnew<CR>
 nnoremap <leader>tx :tabclose<CR>
 nnoremap <leader>tn :tabn<CR>
@@ -125,7 +125,7 @@ nnoremap <leader>tp :tabp<CR>
 nnoremap <leader>x :bdelete<CR>
 nnoremap <leader>b :enew<CR>
 
-" toggle line wrapping
+" Toggle line wrapping
 nnoremap <leader>lw :set wrap!<CR>
 
 " Press jk fast to exit insert mode
@@ -146,38 +146,80 @@ noremap <leader>Y "+Y
 " Open file explorer
 noremap <silent> <leader>e :Lex<CR>
 
+" Visual block mode remap
+nnoremap <A-v> <C-v>
+
 " ========================================
-" Other
+" Desing & Styling
 " ========================================
 
 " Syntax highlighting
 syntax on
-
-" Colorscheme
-" colorscheme industry
-colorscheme wildcharm
-set background=dark
-" hi Normal ctermbg=NONE guibg=NONE
-" hi NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
-" hi VertSplit guibg=NONE guifg=NONE ctermbg=NONE ctermfg=NONE
-
-" Sync clipboard with OS
-if system('uname -s') == "Darwin\n"
-  set clipboard=unnamed "OSX
-else
-  set clipboard=unnamedplus "Linux
-endif
 
 " True colors
 if !has('gui_running') && &term =~ '\%(screen\|tmux\)'
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
+" WSL2 true color support
+if has('wsl')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  " Fix cursor shape in WSL
+  let &t_SI = "\<Esc>[6 q"
+  let &t_SR = "\<Esc>[4 q"
+  let &t_EI = "\<Esc>[2 q"
+endif
 set termguicolors
+
+" Include runtimepath... needed for wsl2, other colorshemes include path
+set runtimepath+=$HOME/.vim/plugged/catppuccin
+
+" Colorscheme
+colorscheme catppuccin_mocha
+set background=dark
+" hi Normal ctermbg=NONE guibg=NONE
+" hi NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
+" hi VertSplit guibg=NONE guifg=NONE ctermbg=NONE ctermfg=NONE
+
+" Lightline colorsheme/theme
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+
+" ========================================
+" Other
+" ========================================
+
+" Sync clipboard with OS
+if has('win32') || has('win64')
+  set clipboard=unnamed "Windows
+elseif system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  " Linux (X11 and Wayland)
+  set clipboard=unnamedplus
+  " Wayland clipboard support (fallback if wl-clipboard is available)
+  if executable('wl-copy') && executable('wl-paste')
+    let g:clipboard = {
+      \   'name': 'wl-clipboard',
+      \   'copy': {
+      \      '+': 'wl-copy',
+      \      '*': 'wl-copy --primary',
+      \   },
+      \   'paste': {
+      \      '+': 'wl-paste --no-newline',
+      \      '*': 'wl-paste --no-newline --primary',
+      \   },
+      \   'cache_enabled': 1,
+      \ }
+  endif
+endif
 
 " Use a line cursor within insert mode and a block cursor everywhere else.
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
+
+" CTRL + l correction
+autocmd FileType netrw silent! unmap <buffer> <C-L>
 
 " Netrw
 let g:netrw_banner = 0
@@ -189,3 +231,28 @@ let g:netrw_winsize = 25
 augroup netrw_setup | au!
     au FileType netrw nmap <buffer> l <CR>
 augroup END
+
+" ========================================
+" Plugins, run :PlugInstall, :PlugUpdate
+" ========================================
+
+call plug#begin()
+
+" List plugins here
+Plug 'itchyny/lightline.vim'
+" Plug 'vim-airline/vim-airline'
+Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'preservim/nerdtree'
+Plug 'dense-analysis/ale'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'ghifarit53/tokyonight-vim'
+" Plug 'nordtheme/vim'
+" Plug 'morhetz/gruvbox'
+
+call plug#end()
+
