@@ -1,0 +1,6 @@
+# Catppuccin Mocha theme
+--theme="Catppuccin Mocha"
+
+# Style
+--style="numbers,changes,header"
+--color=always
