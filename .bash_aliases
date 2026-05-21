@@ -52,7 +52,7 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 ## SSH
 alias ssha='eval $(ssh-agent) && ssh-add'
 
-## Debian-based installed, install, update, upgrade, remove, purge...
+## Debian-based: installed, install, update, upgrade, remove, purge...
 alias installed='sudo apt list --installed'
 alias allinone='sudo apt update && sudo apt upgrade -y && sudo apt autoclean -y && sudo apt autoremove -y && sudo apt autopurge -y'
 alias inst='sudo apt install'
@@ -62,6 +62,16 @@ alias upg='sudo apt upgrade'
 alias ac='sudo apt autoclean'
 alias ar='sudo apt autoremove'
 alias ap='sudo apt autopurge'
+
+## Fedora/RPM-based: installed, install, update, upgrade, remove, autoremove...
+alias installed='rpm -qa | sort'
+alias allinone='sudo dnf upgrade -y && sudo dnf autoremove -y && sudo dnf clean all'
+alias inst='sudo dnf install'
+alias rem='sudo dnf remove'
+alias upd='sudo dnf check-update'
+alias upg='sudo dnf upgrade'
+alias ac='sudo dnf clean all'
+alias ar='sudo dnf autoremove'
 
 ## Arch-based installed, install, update, upgrade, remove, purge..
 alias installedar='pacman -Q' 
