@@ -64,14 +64,14 @@ alias ar='sudo apt autoremove'
 alias ap='sudo apt autopurge'
 
 ## Fedora/RPM-based: installed, install, update, upgrade, remove, autoremove...
-alias installed='rpm -qa | sort'
-alias allinone='sudo dnf upgrade -y && sudo dnf autoremove -y && sudo dnf clean all'
-alias inst='sudo dnf install'
-alias rem='sudo dnf remove'
-alias upd='sudo dnf check-update'
-alias upg='sudo dnf upgrade'
-alias ac='sudo dnf clean all'
-alias ar='sudo dnf autoremove'
+alias installedfe='rpm -qa | sort'
+alias allinonefe='sudo dnf upgrade -y && sudo dnf autoremove -y && sudo dnf clean all'
+alias instfe='sudo dnf install'
+alias remfe='sudo dnf remove'
+alias updfe='sudo dnf check-update'
+alias upgfe='sudo dnf upgrade'
+alias acfe='sudo dnf clean all'
+alias arfe='sudo dnf autoremove'
 
 ## Arch-based installed, install, update, upgrade, remove, purge..
 alias installedar='pacman -Q' 
